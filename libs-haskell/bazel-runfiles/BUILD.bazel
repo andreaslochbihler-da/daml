@@ -32,3 +32,9 @@ da_haskell_test(
     visibility = ["//visibility:public"],
     deps = [":bazel-runfiles"],
 )
+
+alias(
+    name = "bazel-runfiles-new",
+    actual = "@io_tweag_rules_haskell//tools/runfiles",
+    visibility = ["//visibility:public"],
+)
