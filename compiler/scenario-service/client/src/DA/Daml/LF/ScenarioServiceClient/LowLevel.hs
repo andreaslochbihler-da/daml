@@ -1,6 +1,7 @@
 -- Copyright (c) 2019 Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 -- SPDX-License-Identifier: Apache-2.0
 
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE MultiWayIf #-}
@@ -27,6 +28,7 @@ module DA.Daml.LF.ScenarioServiceClient.LowLevel
   , ScenarioServiceException(..)
   ) where
 
+import qualified Bazel.Runfiles
 import Conduit (runConduit, (.|), MonadUnliftIO(..))
 import Data.Maybe
 import Data.IORef
@@ -60,7 +62,6 @@ import System.FilePath
 import qualified System.IO
 import System.Process (proc, CreateProcess, readCreateProcessWithExitCode)
 
-import DA.Bazel.Runfiles
 import qualified DA.Daml.LF.Ast as LF
 import qualified ScenarioService as SS
 
@@ -114,8 +115,8 @@ instance NFData Error where
 
 findServerJar :: IO FilePath
 findServerJar = do
-  runfilesDir <- locateRunfiles (mainWorkspace </> "compiler/scenario-service/server")
-  pure (runfilesDir </> "scenario-service.jar")
+  runfiles <- Bazel.Runfiles.create
+  pure $! Bazel.Runfiles.rlocation runfiles SCENARIO_SERVICE_JAR
 
 -- | Return the 'CreateProcess' for running java.
 -- Uses 'java' from JAVA_HOME if set, otherwise calls java via

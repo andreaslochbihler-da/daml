@@ -42,9 +42,15 @@ da_haskell_library(
         "//compiler/daml-lf-proto",
         "//compiler/scenario-service/protos:scenario_service_haskell_proto",
         "//daml-assistant:daml-project-config",
-        "//libs-haskell/bazel-runfiles",
+        "//libs-haskell/bazel-runfiles:bazel-runfiles-new",
         "//libs-haskell/da-hs-base",
         "//nix/third-party/gRPC-haskell:grpc-haskell",
         "//nix/third-party/gRPC-haskell/core:grpc-haskell-core",
+    ],
+    data = [
+        "//compiler/scenario-service/server:scenario_service_jar",
+    ],
+    compiler_flags = [
+        '-DSCENARIO_SERVICE_JAR="$(WORKSPACE_NAME)/$(rootpath //compiler/scenario-service/server:scenario_service_jar)"',
     ],
 )
