@@ -56,6 +56,7 @@ def daml_deps():
                 "@haskell_static_ghc_patch//file:downloaded",
                 "@com_github_digital_asset_daml//bazel_tools:haskell-windows-library-dirs.patch",
                 "@com_github_digital_asset_daml//bazel_tools:haskell-runfiles.patch",
+                "@com_github_digital_asset_daml//bazel_tools:haskell-expand-location.patch",
             ],
             patch_args = ["-p1"],
             sha256 = rules_haskell_sha256,
