@@ -63,13 +63,14 @@ common_haskell_flags = [
     "-with-rtsopts=-N2 -qg -I0",
 ]
 
-def _wrap_rule(rule, name = "", deps = [], hazel_deps = [], compiler_flags = [], **kwargs):
+def _wrap_rule(rule, name = "", deps = [], hazel_deps = [], compiler_flags = [], toolchains = [], **kwargs):
     ext_flags = ["-X%s" % ext for ext in common_haskell_exts]
     hazel_libs = [hazel_library(dep) for dep in hazel_deps]
     rule(
         name = name,
         compiler_flags = ext_flags + common_haskell_flags + compiler_flags,
         deps = hazel_libs + deps,
+        toolchains = toolchains + ["//bazel_tools:make_variables"],
         **kwargs
     )
 

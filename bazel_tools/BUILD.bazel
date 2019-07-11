@@ -1,6 +1,8 @@
 # Copyright (c) 2019 Digital Asset (Switzerland) GmbH and/or its affiliates. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+load(":make_variables.bzl", "make_variables")
+
 # Export Bazel sources for Bazel API docs.
 exports_files(
     [
@@ -16,4 +18,9 @@ exports_files(
         "pom_template.xml",
     ],
     visibility = ["//:__subpackages__"],
+)
+
+make_variables(
+    name = "make_variables",
+    visibility = ["//visibility:public"],
 )
